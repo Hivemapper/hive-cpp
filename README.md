@@ -183,7 +183,9 @@ All API requests are constructed using the following environment variables:
 - `body` – Request body as raw string (can be JSON, plain text, etc.)
 - `headers` – JSON object containing key-value HTTP headers to pass along
 
-**Returns:** Raw response as a `std::string`
+**Returns:** An HttpResponse structure containing:
+- `statusCode` - The HTTP status code of the response (e.g. 200, 400, etc.)
+- `body` - The raw response data as a std::string
 
 **Throws:** `std::runtime_error` if the request fails
 
@@ -196,9 +198,10 @@ nlohmann::json headers = {
 
 std::string body = R"({"message":"hello"})";
 
-std::string response = fetch("http://httpbin.org/post", "POST", body, headers);
+HttpResponse response = fetch("http://httpbin.org/post", "POST", body, headers);
+std::cout << "Status code: " << response.statusCode << std::endl;
 std::cout << "Server responded with:
-" << response << std::endl;
+" << response.body << std::endl;
 ```
 
 This interface is useful for sending network requests from the dashcam through a trusted proxy, without relying on external networking logic inside your own code.

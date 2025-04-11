@@ -12,29 +12,32 @@
 
 #include "hivecpp/Utils.h"
 
+struct HttpResponse {
+    int statusCode;
+    std::string body;
+};
+
 /**
- * @brief Routes a network request via a proxy gateway.
+ * @brief Universal fetch via proxy
  *
- * This function directs any network request through the proxy located at
- * "http://gateway.beemaps.com/". The function is universal in that:
- *   - The request body can be any string (JSON, plain text, XML, etc.).
- *   - The HTTP method is fully flexible (e.g., GET, POST, PUT, DELETE, etc.).
- *   - Headers are provided as a JSON object containing arbitrary key/value pairs.
+ * This function routes any network call through the proxy located at
+ * "https://bee-internet-gateway.hmworkers.workers.dev/". It is fully universal in the sense that:
  *
- * Internally, the function packages the parameters into a JSON payload and sends
- * the payload to the proxy using libcurl. It returns the raw string response as
- * received from the proxy.
+ * - The request body does not have to be JSON (or any particular format)
+ * - The HTTP method can be any valid method (GET, POST, PUT, DELETE, etc.)
+ * - Headers can be passed via a JSON object containing arbitrary key/value pairs
+ * - Both the HTTP response code and the raw response body are returned.
  *
- * @param target_url The actual URL for the network call.
- * @param method The HTTP method to use (defaults to "GET").
- * @param body The request payload as a string (defaults to an empty string).
- * @param headers A JSON object containing any additional HTTP header key/value pairs.
- * @return std::string The raw response from the proxy.
- * @throws std::runtime_error if there is an error with the request process.
+ * @param target_url  The actual URL to request.
+ * @param method      The HTTP method (e.g., "GET", "POST", "PUT", "DELETE", etc.).
+ * @param body        The request payload as a string (does not have to be JSON).
+ * @param headers     Additional HTTP headers as a JSON object.
+ * @return HttpResponse The response code along with the raw response data.
+ * @throws std::runtime_error if any curl errors occur.
  */
-std::string fetch(const std::string& target_url,
-                                  const std::string& method = "GET",
-                                  const std::string& body = "",
-                                  const nlohmann::json& headers = nlohmann::json::object());
+HttpResponse fetch(const std::string& target_url,
+                   const std::string& method,
+                   const std::string& body,
+                   const nlohmann::json& headers);
 
 #endif // NETWORK_API_H
