@@ -1,5 +1,5 @@
 /* Position API */
-
+#include <sstream>
 #include "hivecpp/PositionApi.h"
 
 /* @brief Get the latest position

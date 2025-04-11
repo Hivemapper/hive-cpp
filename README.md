@@ -172,6 +172,39 @@ All API requests are constructed using the following environment variables:
 
 ---
 
+## 🌐 Network Interface
+
+### `fetch(target_url, method, body, headers)`
+**Purpose:** Performs a universal HTTP request via the proxy gateway.
+
+**Parameters:**
+- `target_url` – Full URL to the final destination (e.g. `"http://httpbin.org/post"`)
+- `method` – HTTP method as string (`"GET"`, `"POST"`, `"PUT"`, etc.)
+- `body` – Request body as raw string (can be JSON, plain text, etc.)
+- `headers` – JSON object containing key-value HTTP headers to pass along
+
+**Returns:** Raw response as a `std::string`
+
+**Throws:** `std::runtime_error` if the request fails
+
+**Example Usage:**
+```cpp
+nlohmann::json headers = {
+  {"Content-Type", "application/json"},
+  {"Authorization", "Bearer token123"}
+};
+
+std::string body = R"({"message":"hello"})";
+
+std::string response = fetch("http://httpbin.org/post", "POST", body, headers);
+std::cout << "Server responded with:
+" << response << std::endl;
+```
+
+This interface is useful for sending network requests from the dashcam through a trusted proxy, without relying on external networking logic inside your own code.
+
+---
+
 ## 🛠️ Requirements
 
 - `libcurl`
