@@ -183,7 +183,7 @@ All API requests are constructed using the following environment variables:
 - `body` – Request body as raw string (can be JSON, plain text, etc.)
 - `headers` – JSON object containing key-value HTTP headers to pass along
 
-**Parameters:** An HttpResponse structure containing:
+**Returns:** An HttpResponse structure containing:
 - `statusCode` - The HTTP status code of the response (e.g. 200, 400, etc.)
 - `body` - The raw response data as a std::string
 
