@@ -1,10 +1,16 @@
-// Network.h
+// NetworkApi.h
 
-#ifndef NETWORK_H
-#define NETWORK_H
+#ifndef NETWORK_API_H
+#define NETWORK_API_H
 
+#include <iostream>
+#include <stdexcept>
 #include <string>
+
+#include <curl/curl.h>
 #include <nlohmann/json.hpp>
+
+#include "hivecpp/Utils.h"
 
 /**
  * @brief Routes a network request via a proxy gateway.
@@ -31,4 +37,4 @@ std::string fetch(const std::string& target_url,
                                   const std::string& body = "",
                                   const nlohmann::json& headers = nlohmann::json::object());
 
-#endif // NETWORK_H
+#endif // NETWORK_API_H

@@ -1,10 +1,12 @@
-#include "hivecpp/Network.h"
-#include "hivecpp/Utils.h"
 #include <iostream>
 #include <stdexcept>
 #include <string>
+
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
+
+#include "hivecpp/Utils.h"
+#include "hivecpp/NetworkApi.h"
 
 /**
  * @brief Universal fetch via proxy
