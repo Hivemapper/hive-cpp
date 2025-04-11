@@ -18,6 +18,7 @@ add_library(hivecpp STATIC
     src/LandmarksApi.cpp
     src/FileApi.cpp
     src/Utils.cpp
+    src/NetworkApi.cpp
 )
 
 # add include directory
