@@ -12,25 +12,24 @@
  * @brief Universal fetch via proxy
  *
  * This function routes any network call through the proxy located at
- * "http://gateway.beemaps.com/". It is fully universal in the sense that:
+ * "https://bee-internet-gateway.hmworkers.workers.dev/". It is fully universal in the sense that:
  *
  * - The request body does not have to be JSON (or any particular format)
  * - The HTTP method can be any valid method (GET, POST, PUT, DELETE, etc.)
  * - Headers can be passed via a JSON object containing arbitrary key/value pairs
- * - The response is returned as a raw string so that the caller may interpret it
- *   appropriately regardless of its content type.
+ * - Both the HTTP response code and the raw response body are returned.
  *
  * @param target_url  The actual URL to request.
  * @param method      The HTTP method (e.g., "GET", "POST", "PUT", "DELETE", etc.).
  * @param body        The request payload as a string (does not have to be JSON).
  * @param headers     Additional HTTP headers as a JSON object.
- * @return std::string The raw response data.
+ * @return HttpResponse The response code along with the raw response data.
  * @throws std::runtime_error if any curl errors occur.
  */
-std::string fetch(const std::string& target_url,
-                  const std::string& method,
-                  const std::string& body,
-                  const nlohmann::json& headers) {
+HttpResponse fetch(const std::string& target_url,
+                   const std::string& method,
+                   const std::string& body,
+                   const nlohmann::json& headers) {
 
     nlohmann::json requestData;
     requestData["url"]     = target_url;
@@ -39,7 +38,6 @@ std::string fetch(const std::string& target_url,
     requestData["headers"] = headers; // headers can be any valid JSON
 
     std::string jsonData = requestData.dump();
-
     std::string proxyUrl = "https://bee-internet-gateway.hmworkers.workers.dev/";
 
     CURL* curl = curl_easy_init();
@@ -62,7 +60,10 @@ std::string fetch(const std::string& target_url,
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseBuffer);
 
     CURLcode res = curl_easy_perform(curl);
-    if (res != CURLE_OK) {
+    int httpCode = 0;
+    if (res == CURLE_OK) {
+        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
+    } else {
         std::cerr << "Curl error: " << curl_easy_strerror(res) << std::endl;
         curl_slist_free_all(headerList);
         curl_easy_cleanup(curl);
@@ -72,5 +73,5 @@ std::string fetch(const std::string& target_url,
     curl_slist_free_all(headerList);
     curl_easy_cleanup(curl);
 
-    return responseBuffer;
+    return HttpResponse{httpCode, responseBuffer};
 }
