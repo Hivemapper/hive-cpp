@@ -55,7 +55,7 @@ HttpResponse fetch(const std::string& target_url,
     headerList = curl_slist_append(headerList, "Content-Type: application/json");
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerList);
 
-    std::string responseBuffer = "{}";
+    std::string responseBuffer;
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &responseBuffer);
 
@@ -64,6 +64,7 @@ HttpResponse fetch(const std::string& target_url,
     if (res == CURLE_OK) {
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
     } else {
+        responseBuffer = "{}";
         std::cerr << "Curl error in fetch api call: " << curl_easy_strerror(res) << std::endl;
     }
 
