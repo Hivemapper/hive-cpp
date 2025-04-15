@@ -64,10 +64,8 @@ HttpResponse fetch(const std::string& target_url,
     if (res == CURLE_OK) {
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &httpCode);
     } else {
-        std::cerr << "Curl error: " << curl_easy_strerror(res) << std::endl;
-        curl_slist_free_all(headerList);
-        curl_easy_cleanup(curl);
-        throw std::runtime_error("Curl error: " + std::string(curl_easy_strerror(res)));
+        responseBuffer = "{}";
+        std::cerr << "Curl error in fetch api call: " << curl_easy_strerror(res) << std::endl;
     }
 
     curl_slist_free_all(headerList);
