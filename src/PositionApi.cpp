@@ -31,9 +31,9 @@ nlohmann::json get_latest_position(){
  *  @return A JSON object containing the positions near the specified UTC time.
 
 **/
-nlohmann::json get_positions_near_unix_timestamp(const long unix_timestamp, const int interval_secs){
+nlohmann::json get_positions_near_unix_timestamp(const long unix_timestamp, const double interval_secs){
 
-    int query_interval = std::max(0, std::min(10, interval_secs));
+    double query_interval = std::max(0.0, std::min(10.0, interval_secs));
     std::string start_time_str = unix_to_utc_timestamp(unix_timestamp - query_interval * 1000);
     std::string end_time_str = unix_to_utc_timestamp(unix_timestamp + query_interval * 1000);
 

@@ -33,7 +33,7 @@ nlohmann::json get_latest_position();
  *  @return A JSON object containing the positions near the specified UTC time.
 
 **/
-nlohmann::json get_positions_near_unix_timestamp(const long unix_timestamp, const int interval_secs);
+nlohmann::json get_positions_near_unix_timestamp(const long unix_timestamp, const double interval_secs);
 
 /** @brief Convert UTC timestamp to Unix timestamp
 *
