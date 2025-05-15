@@ -65,6 +65,6 @@ nlohmann::json get_landmarks_by_timestamp(long since_timestamp, long until_times
 */
 nlohmann::json get_landmarks_after_id(long id){
     std::string landmarks_url = "http://" + dashcam::DASHCAM_HOST + ":" + dashcam::DASHCAM_PORT + "/api/1/landmarks";
-    std::string request = landmarks_url + "/" + std::to_string(id);
+    std::string request = landmarks_url + "/id/" + std::to_string(id);
     return get_json_from_url(request);
 }

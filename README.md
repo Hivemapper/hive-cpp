@@ -21,13 +21,9 @@ All API requests are constructed using the following environment variables:
 **Output Example:**
 ```json
 {
-  "altitude": 15.891,
-  "cno": 39,
-  "heading": 297.11066000000005,
   "id": 858894,
   "latitude": 37.7880956,
   "longitude": -122.3992437,
-  "speed": 0.029583653435111046,
   "utc_time": "2025-04-08 23:07:52.750329",
   "unix_timestamp": 1744153672750
 }
@@ -35,13 +31,42 @@ All API requests are constructed using the following environment variables:
 
 ### Output Field Descriptions:
 - `latitude`, `longitude`: **Position** in decimal degrees (WGS84)
-- `altitude`: **Height** in meters above ellipsoid
-- `speed`: **Speed** in meters per second (m/s)
-- `heading`: **Movement direction** in degrees (0–360 clockwise, 0 = North)
-- `cno`: **Carrier-to-noise density ratio** in dB-Hz (GNSS signal quality)
 - `utc_time`: UTC timestamp of fix
 - `unix_timestamp`: Milliseconds since unix epoch
 - `id`: Internal row identifier
+
+### `get_positions_near_unix_timestamp(unix_timestamp, interval_secs)`
+
+**Parameters:**
+
+- `unix_timestamp` (long): The central point in time to search around, in milliseconds since unix epoch.
+
+- `interval_secs` (double): Time range in seconds to search on both sides of unix_timestamp.
+A value of 5 searches ±5 seconds, i.e., a total window of 10 seconds. Maximum allowed value is 10 seconds for a full window of 20 seconds.
+
+**Returns:**
+A JSON array of GNSS positions where each position includes an added unix_timestamp field (converted from utc_time).
+
+**Output Example:**
+```json
+[
+  {
+    "id": 858891,
+    "latitude": 37.7880901,
+    "longitude": -122.3992480,
+    "utc_time": "2025-04-08 23:07:47.750329",
+    "unix_timestamp": 1744153672750
+  },
+  {
+    "id": 858892,
+    "latitude": 37.7880923,
+    "longitude": -122.3992461,
+    "utc_time": "2025-04-08 23:07:50.750329",
+    "unix_timestamp": 1744153672750
+  },
+  ...
+]
+```
 
 ---
 
