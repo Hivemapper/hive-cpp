@@ -29,6 +29,12 @@ All API requests are constructed using the following environment variables:
 }
 ```
 
+### Output Field Descriptions:
+- `latitude`, `longitude`: **Position** in decimal degrees (WGS84)
+- `utc_time`: UTC timestamp of fix
+- `unix_timestamp`: Milliseconds since unix epoch
+- `id`: Internal row identifier
+
 ### `get_positions_near_unix_timestamp(unix_timestamp, interval_secs)`
 
 **Parameters:**
