@@ -24,15 +24,23 @@ All API requests are constructed using the following environment variables:
   "id": 858894,
   "latitude": 37.7880956,
   "longitude": -122.3992437,
+  "altitude":-16.401,
+  "estimated_speed":7.18377685546875,
   "utc_time": "2025-04-08 23:07:52.750329",
-  "unix_timestamp": 1744153672750
+  "unix_timestamp": 1744153672750,
+  "gdop":1.39,
+  "hdop":0.67
 }
 ```
 
 ### Output Field Descriptions:
 - `latitude`, `longitude`: **Position** in decimal degrees (WGS84)
+- `altitude`: **Height** in meters above ellipsoid
+- `estimated_speed`: Estimated **Speed** in meters per second (m/s)
 - `utc_time`: UTC timestamp of fix
 - `unix_timestamp`: Milliseconds since unix epoch
+- `gdop`: Geometric dilution of precision
+- `hdop`: Horizontal dilution of precision
 - `id`: Internal row identifier
 
 ### `get_positions_near_unix_timestamp(unix_timestamp, interval_secs)`
@@ -54,15 +62,23 @@ A JSON array of GNSS positions where each position includes an added unix_timest
     "id": 858891,
     "latitude": 37.7880901,
     "longitude": -122.3992480,
+    "altitude":-16.401,
+    "estimated_speed":7.18377685546875,
     "utc_time": "2025-04-08 23:07:47.750329",
-    "unix_timestamp": 1744153672750
+    "unix_timestamp": 1744153672750,
+    "gdop":1.39,
+    "hdop":0.67
   },
   {
     "id": 858892,
     "latitude": 37.7880923,
     "longitude": -122.3992461,
+    "altitude":-16.401,
+    "estimated_speed":7.18377685546875,
     "utc_time": "2025-04-08 23:07:50.750329",
-    "unix_timestamp": 1744153672750
+    "unix_timestamp": 1744153672750,
+    "gdop":1.39,
+    "hdop":0.67
   },
   ...
 ]
@@ -114,14 +130,18 @@ A JSON array of GNSS positions where each position includes an added unix_timest
     }
   },
   {
-    "class_label": "traffic-light",
+    "class_label": "speed-sign",
     "id": 144,
     "lat": 37.88837779145528,
     "lon": -122.11823105294746,
     "alt": 57.006156626506026,
     "azimuth": 2.939116503885373,
     "ts": 1744223531970,
-    "pos_confidence": 0.7199414419651322
+    "pos_confidence": 0.7199414419651322,
+    "attributes": {
+      "speed_label": 55,
+      "speed_label_conf": 0.9999944065961269
+    }
   }
 ]
 ```
