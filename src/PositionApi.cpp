@@ -131,3 +131,27 @@ std::string url_encode(const std::string &value) {
 
     return escaped.str();
 }
+
+/* @brief Get the latest yaw offset
+*
+*   Will return error if yaw offset has not yet been calculated.
+*
+*   @return A JSON object containing the yaw data.
+*/
+nlohmann::json get_latest_yaw_offset() {
+    std::string request = "http://" + dashcam::DASHCAM_HOST + ":" + dashcam::DASHCAM_PORT + "/api/1/yaw/latest";
+    try {
+        return get_json_from_url(request);
+    } catch (const std::exception& e) {
+        try {
+            // Try to re-parse the error JSON from the exception message
+            return nlohmann::json::parse(e.what());
+        } catch (...) {
+            // If parsing fails, return generic error
+            return nlohmann::json{
+                {"error", e.what()},
+                {"status_code", 500}
+            };
+        }
+    }
+}

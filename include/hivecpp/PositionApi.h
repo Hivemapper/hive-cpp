@@ -63,4 +63,12 @@ std::string unix_to_utc_timestamp(const long unix_timestamp);
  */
 std::string url_encode(const std::string &value);
 
+/* @brief Get the latest yaw offset
+*
+*   Will return error if yaw offset has not yet been calculated.
+*
+*   @return A JSON object containing the yaw data.
+*/
+nlohmann::json get_latest_yaw_offset();
+
 #endif // POSITION_API_H
