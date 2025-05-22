@@ -68,3 +68,15 @@ nlohmann::json get_landmarks_after_id(long id){
     std::string request = landmarks_url + "/id/" + std::to_string(id);
     return get_json_from_url(request);
 }
+
+/* @brief Get positions near landmark with id
+*
+*   @param id The id of the landmark to retrieve.
+*   @return A JSON object containing the position data.
+*/
+nlohmann::json get_landmark_context(long id){
+    std::string landmarks_url = "http://" + dashcam::DASHCAM_HOST + ":" + dashcam::DASHCAM_PORT + "/api/1/landmarks";
+    std::string request = landmarks_url + "/positionContext/" + std::to_string(id);
+
+    return get_json_from_url(request);
+}

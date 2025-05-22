@@ -51,4 +51,12 @@ nlohmann::json get_landmarks_by_timestamp(long since_timestamp = -1, long until_
 */
 nlohmann::json get_landmarks_after_id(long id);
 
+
+/* @brief Get positions near landmark with id
+*
+*   @param id The id of the landmark to retrieve.
+*   @return A JSON object containing the position data.
+*/
+nlohmann::json get_landmark_context(long id);
+
 #endif // LANDMARKS_API_H

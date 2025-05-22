@@ -29,18 +29,20 @@ All API requests are constructed using the following environment variables:
   "utc_time": "2025-04-08 23:07:52.750329",
   "unix_timestamp": 1744153672750,
   "gdop":1.39,
-  "hdop":0.67
+  "hdop":0.67,
+  "eph":3.776
 }
 ```
 
 ### Output Field Descriptions:
-- `latitude`, `longitude`: **Position** in decimal degrees (WGS84)
-- `altitude`: **Height** in meters above ellipsoid
-- `estimated_speed`: Estimated **Speed** in meters per second (m/s)
+- `latitude`, `longitude`: Position in decimal degrees (WGS84)
+- `altitude`: Height in meters above ellipsoid
+- `estimated_speed`: Estimated Speed in meters per second (m/s)
 - `utc_time`: UTC timestamp of fix
 - `unix_timestamp`: Milliseconds since unix epoch
 - `gdop`: Geometric dilution of precision
 - `hdop`: Horizontal dilution of precision
+- `eph`: Standard deviation of horizontal position error
 - `id`: Internal row identifier
 
 ### `get_positions_near_unix_timestamp(unix_timestamp, interval_secs)`
@@ -67,7 +69,8 @@ A JSON array of GNSS positions where each position includes an added unix_timest
     "utc_time": "2025-04-08 23:07:47.750329",
     "unix_timestamp": 1744153672750,
     "gdop":1.39,
-    "hdop":0.67
+    "hdop":0.67,
+    "eph":3.776
   },
   {
     "id": 858892,
@@ -78,7 +81,8 @@ A JSON array of GNSS positions where each position includes an added unix_timest
     "utc_time": "2025-04-08 23:07:50.750329",
     "unix_timestamp": 1744153672750,
     "gdop":1.39,
-    "hdop":0.67
+    "hdop":0.67,
+    "eph":3.625
   },
   ...
 ]
@@ -167,9 +171,41 @@ A JSON array of GNSS positions where each position includes an added unix_timest
 - `azimuth`: **Orientation** of object in degrees (0 = North)
 - `ts`: **Unix timestamp** in milliseconds
 - `pos_confidence`: **Position accuracy confidence** (0–1)
-- `class_label`: Object type (e.g., `traffic-light`, `regulatory-speed-sign`)
+- `class_label`: Object type (e.g., `speed-sign`, `regulatory-speed-sign`)
 - `attributes`: Additional structured data (e.g., `speed_label` in km/h and its `speed_label_conf`)
 - `id`: Internal identifier for the landmark
+
+
+### `get_landmark_context(id)`
+
+**Parameters:**
+
+- `id` (long) Landmark ID.
+
+
+**Returns:**
+A JSON array of GNSS positions nearby the specified landmark.
+
+**Output Example:**
+```json
+[
+  {
+    "latitude": 37.7880901,
+    "longitude": -122.3992480,
+    "altitude":-16.401,
+    "estimated_speed":7.18377685546875,
+    "eph":3.776
+  },
+  {
+    "latitude": 37.7880923,
+    "longitude": -122.3992461,
+    "altitude":-16.401,
+    "estimated_speed":7.18377685546875,
+    "eph":3.625
+  },
+  ...
+]
+```
 
 ---
 
