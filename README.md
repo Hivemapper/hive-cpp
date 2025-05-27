@@ -190,6 +190,7 @@ A JSON array of GNSS positions nearby the specified landmark.
 ```json
 [
   {
+    "unix_timestamp" : 1745427610345,
     "latitude": 37.7880901,
     "longitude": -122.3992480,
     "altitude":-16.401,
@@ -197,6 +198,7 @@ A JSON array of GNSS positions nearby the specified landmark.
     "eph":3.776
   },
   {
+    "unix_timestamp" : 1745427611547,
     "latitude": 37.7880923,
     "longitude": -122.3992461,
     "altitude":-16.401,
