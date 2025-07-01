@@ -56,9 +56,7 @@ nlohmann::json get_landmarks_by_timestamp(long since_timestamp, long until_times
 
 /* @brief Get landmark starting with id (inclusive)
 *
-*   Retrieves the landmark with the specified id and its associated observation timestamp.
-*   If no landmark is found with the given id, the endpoint falls back to returning the last
-*   5000 landmarks.
+*   Retrieves the landmarks starting with the specified id and its associated observation timestamp.
 *
 *   @param id The id of the landmark to retrieve.
 *   @return A JSON object containing the landmark data.
